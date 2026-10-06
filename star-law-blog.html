@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="面向测试工程师的 STAR 法则表达指南：用真实经历讲清背景、任务、行动与结果。">
+  <title>用 STAR 法则讲好测试故事</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f2eb;
+      --ink: #202720;
+      --muted: #69736a;
+      --line: #d9ddd2;
+      --green: #315b48;
+      --green-dark: #1f4133;
+      --lime: #d6e58d;
+      --card: #fffefa;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Noto Serif SC", serif;
+      --sans: "Inter", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    .topbar {
+      width: min(1120px, calc(100% - 48px));
+      margin: auto;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 750; letter-spacing: .04em; }
+    .brand-mark { width: 25px; height: 25px; display: grid; place-items: center; color: var(--paper); background: var(--green); border-radius: 8px 8px 8px 2px; font-size: 14px; }
+    .top-note { color: var(--muted); letter-spacing: .03em; text-transform: none; }
+    .hero {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 86px 0 72px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(260px, .72fr);
+      align-items: center;
+      gap: 72px;
+    }
+    .eyebrow { display: flex; gap: 12px; align-items: center; color: var(--green); font-size: 12px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--green); }
+    h1 { max-width: 760px; margin: 23px 0 20px; font: 500 clamp(42px, 6vw, 76px)/1.15 var(--serif); letter-spacing: -.055em; }
+    h1 em { color: var(--green); font-style: normal; }
+    .dek { max-width: 650px; margin: 0; color: #566158; font-size: 17px; line-height: 1.9; }
+    .byline { display: flex; align-items: center; gap: 12px; margin-top: 30px; color: var(--muted); font-size: 13px; }
+    .byline .dot { width: 4px; height: 4px; border-radius: 50%; background: #9aa398; }
+    .hero-art { position: relative; min-height: 290px; display: grid; place-items: center; }
+    .orbit { position: absolute; width: 260px; height: 260px; border: 1px solid #c7d1bf; border-radius: 50%; transform: rotate(-24deg) scaleX(1.22); }
+    .orbit::after { content: ""; position: absolute; inset: 28px; border: 1px dashed #bcc8b7; border-radius: 50%; }
+    .star-card { position: relative; z-index: 1; width: 216px; padding: 24px; background: var(--green-dark); color: #fffef7; border-radius: 18px 18px 18px 4px; box-shadow: 0 24px 55px #263c2c24; transform: rotate(3deg); }
+    .star-card small { color: #cbd9a1; letter-spacing: .18em; font-size: 10px; }
+    .star-card strong { display: block; margin: 9px 0 5px; font: 500 43px/1 var(--serif); letter-spacing: .08em; }
+    .star-card span { color: #d4ddd2; font-size: 12px; }
+    .spark { position: absolute; color: #a0b85d; font: 40px/1 var(--serif); }
+    .spark.one { top: 20px; right: 20px; }
+    .spark.two { bottom: 19px; left: 18px; font-size: 24px; }
+    .rule { height: 1px; background: var(--line); }
+    .layout { width: min(1120px, calc(100% - 48px)); margin: 0 auto; display: grid; grid-template-columns: 210px minmax(0, 720px); justify-content: space-between; gap: 60px; padding: 72px 0 100px; }
+    aside { align-self: start; position: sticky; top: 30px; }
+    .toc-label { margin: 0 0 15px; color: #879087; font-size: 11px; font-weight: 750; letter-spacing: .16em; }
+    .toc { margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--line); }
+    .toc li { margin: 0; }
+    .toc a { display: block; padding: 7px 0 7px 16px; color: #69736a; text-decoration: none; font-size: 13px; transition: color .2s, border .2s; border-left: 2px solid transparent; margin-left: -1px; }
+    .toc a:hover { color: var(--green); border-left-color: var(--green); }
+    article { min-width: 0; }
+    .intro { margin: 0 0 48px; padding: 24px 28px; border-left: 3px solid #a9bd6a; background: #eaeedf; color: #38463c; font: 20px/1.75 var(--serif); }
+    section { scroll-margin-top: 30px; margin: 0 0 57px; }
+    h2 { margin: 0 0 18px; font: 500 31px/1.35 var(--serif); letter-spacing: -.025em; }
+    h3 { margin: 30px 0 8px; font-size: 17px; line-height: 1.5; }
+    p { margin: 0 0 17px; color: #4f5a51; font-size: 15px; }
+    strong { color: #26372b; }
+    .definition-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+    .definition { min-height: 132px; padding: 19px 20px; background: var(--card); border: 1px solid #e5e6dc; border-radius: 12px; }
+    .definition b { display: flex; align-items: baseline; gap: 9px; color: var(--green); font: 600 26px/1.2 var(--serif); }
+    .definition b span { color: var(--ink); font: 650 14px var(--sans); }
+    .definition p { margin: 10px 0 0; font-size: 13px; }
+    .story { padding: 28px; background: var(--card); border: 1px solid #e5e6dc; border-radius: 16px; }
+    .question { display: inline-block; margin-bottom: 21px; padding: 6px 11px; color: var(--green-dark); background: #e9efd8; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    .story-step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; border-top: 1px solid #ecece4; }
+    .story-step:first-of-type { border-top: 0; }
+    .letter { width: 36px; height: 36px; display: grid; place-items: center; color: white; background: var(--green); border-radius: 11px 11px 11px 3px; font: 600 18px var(--serif); }
+    .story-step h3 { margin: 0 0 5px; font-size: 15px; }
+    .story-step p { margin: 0; font-size: 14px; }
+    .note { margin-top: 18px; padding: 15px 17px; border-radius: 10px; background: #f2f4e9; color: #5b6657; font-size: 13px; }
+    .tip-list { display: grid; gap: 0; margin: 8px 0 0; padding: 0; list-style: none; counter-reset: tip; }
+    .tip-list li { counter-increment: tip; display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 17px 0; border-top: 1px solid var(--line); color: #4f5a51; font-size: 15px; }
+    .tip-list li::before { content: "0" counter(tip); color: #879764; font: 16px var(--serif); }
+    .mistakes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .mistake { padding: 14px 15px; border: 1px solid #e1e3d9; border-radius: 10px; color: #535e54; background: #faf9f4; font-size: 13px; }
+    .mistake b { display: block; margin-bottom: 4px; color: #894e40; font-size: 13px; }
+    .template { padding: 24px 26px; border-radius: 13px; background: var(--green-dark); color: #f8f8ed; }
+    .template p { margin: 0; padding: 11px 0; color: #e4e9dd; font-size: 14px; border-bottom: 1px solid #ffffff24; }
+    .template p:last-child { border: 0; }
+    .template b { display: inline-block; width: 76px; color: var(--lime); }
+    .closing { padding-top: 26px; border-top: 1px solid var(--line); }
+    .closing p:last-child { margin-bottom: 0; }
+    footer { padding: 26px 24px; border-top: 1px solid var(--line); text-align: center; color: #7d877c; font-size: 12px; }
+    @media (max-width: 760px) {
+      .topbar, .hero, .layout { width: min(100% - 36px, 620px); }
+      .topbar { height: 64px; }
+      .top-note { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 14px; padding: 58px 0 44px; }
+      .hero-art { min-height: 230px; }
+      .orbit { width: 210px; height: 210px; }
+      .star-card { width: 190px; padding: 19px; }
+      .layout { display: block; padding: 48px 0 70px; }
+      aside { position: static; margin-bottom: 35px; }
+      .toc { display: flex; flex-wrap: wrap; border: 0; gap: 7px; }
+      .toc a { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; margin: 0; font-size: 12px; }
+      .toc a:hover { border-color: var(--green); }
+      .definition-grid, .mistakes { grid-template-columns: 1fr; }
+      .definition { min-height: auto; }
+      h2 { font-size: 27px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="质量手记首页"><span class="brand-mark">Q</span>质量手记</a>
+    <span class="top-note">测试工程师的表达与成长</span>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <div class="eyebrow">Career notes · 01</div>
+        <h1 id="page-title">用 <em>STAR</em> 法则<br>讲好测试故事</h1>
+        <p class="dek">把一次测试经历，说成有背景、有判断、有行动、有结果的故事。让面试官听见你的质量意识，也看见你为交付带来的真实价值。</p>
+        <div class="byline"><span>测试工程师成长手记</span><span class="dot"></span><span>阅读约 6 分钟</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit"></div><span class="spark one">✳</span><span class="spark two">✦</span>
+        <div class="star-card"><small>A CLEARER WAY TO TELL YOUR WORK</small><strong>S·T·A·R</strong><span>Situation / Task / Action / Result</span></div>
+      </div>
+    </section>
+
+    <div class="rule"></div>
+
+    <div class="layout">
+      <aside aria-label="文章目录">
+        <p class="toc-label">IN THIS STORY</p>
+        <nav><ul class="toc">
+          <li><a href="#what">认识 STAR</a></li><li><a href="#why">测试工程师为什么需要</a></li>
+          <li><a href="#example">场景示例</a></li><li><a href="#tips">表达技巧</a></li>
+          <li><a href="#pitfalls">常见误区</a></li><li><a href="#template">练习模板</a></li>
+        </ul></nav>
+      </aside>
+
+      <article>
+        <blockquote class="intro">测试的价值不只在“找到了多少 bug”，更在于你如何识别风险、做出判断，并帮助团队更有把握地交付。</blockquote>
+
+        <section id="what">
+          <h2>STAR 法则是什么？</h2>
+          <p>STAR 是一种结构化表达方法，适合回答“讲一次你发现重大缺陷的经历”“如何处理上线风险”“怎样推动问题修复”等行为类问题。它把一段工作经历拆成四个容易跟进的部分：</p>
+          <div class="definition-grid">
+            <div class="definition"><b>S <span>Situation · 情境</span></b><p>当时是什么项目或业务背景？遇到了什么挑战？</p></div>
+            <div class="definition"><b>T <span>Task · 任务</span></b><p>你负责什么？目标、约束和难点是什么？</p></div>
+            <div class="definition"><b>A <span>Action · 行动</span></b><p>你具体做了哪些判断和动作？为什么这样做？</p></div>
+            <div class="definition"><b>R <span>Result · 结果</span></b><p>最后产生了什么变化？如何证明这些行动有效？</p></div>
+          </div>
+        </section>
+
+        <section id="why">
+          <h2>为什么测试工程师更需要它？</h2>
+          <p>测试工作的价值常常藏在过程里：你如何识别风险、如何设计覆盖、如何推动协作，以及如何判断是否可以发布。如果只说“我测了登录模块，发现了几个问题”，面试官很难判断问题有多重要、你承担了什么责任，或团队因此发生了什么改变。</p>
+          <p>STAR 能把这条价值链说完整：<strong>业务背景 → 质量目标 → 测试决策 → 可验证的结果</strong>。它也能帮你区分团队做了什么和自己做了什么，避免回答变成模糊的集体功劳。</p>
+        </section>
+
+        <section id="example">
+          <h2>把一次测试经历讲清楚</h2>
+          <div class="story">
+            <span class="question">面试问题：讲一次你在上线前发现高风险问题的经历。</span>
+            <div class="story-step"><span class="letter">S</span><div><h3>情境</h3><p>我负责一个电商项目的优惠券改版。项目计划在促销活动前上线，涉及领券、下单抵扣和退款回退，历史上订单金额计算也出现过线上问题。</p></div></div>
+            <div class="story-step"><span class="letter">T</span><div><h3>任务</h3><p>我需要在两天的回归窗口内确认核心交易链路可用，并重点评估优惠券在并发领取、重复提交和退款场景下的正确性。时间有限，不能只靠全面点点页面来保证风险可控。</p></div></div>
+            <div class="story-step"><span class="letter">A</span><div><h3>行动</h3><p>我先和产品、开发对齐优惠券状态流转与金额计算规则，整理“领取—使用—取消—退款”的状态图。随后按资金影响和发生概率给场景排序，优先覆盖重复请求、库存边界、折扣叠加和部分退款。</p><p>我用接口测试验证关键状态和金额断言，并通过并发请求复现重复核销风险。发现两个请求几乎同时到达时可能重复使用同一张券后，我提交可复现步骤和请求记录，和开发一起确认幂等校验缺失。修复合入后，我补充回归用例，并将该场景纳入后续自动化检查。</p></div></div>
+            <div class="story-step"><span class="letter">R</span><div><h3>结果</h3><p>团队在发布前修复了重复核销问题，回归确认异常路径恢复正常。核心优惠券链路形成可复用的状态与边界用例，之后同类改动可以更快完成风险检查。</p></div></div>
+            <div class="note">如果有可靠数据，可补充实际拦截订单数、回归耗时变化或线上缺陷趋势；没有数据时，不要为了显得亮眼而编数字。</div>
+          </div>
+        </section>
+
+        <section id="tips">
+          <h2>让回答更有说服力的四个技巧</h2>
+          <ol class="tip-list">
+            <li><span><strong>背景说到刚好够用。</strong>用一两句话交代产品、时间压力和风险。背景铺得太长，会挤占体现能力的行动部分。</span></li>
+            <li><span><strong>任务体现你的责任边界。</strong>明确自己负责的模块、目标和约束。多人合作时，也要让听众知道你承担了什么。</span></li>
+            <li><span><strong>行动写出判断，不只罗列工具。</strong>“我用了接口测试和自动化”还不够。更有信息量的是：为什么优先测这个风险、怎样设计验证、如何推动问题闭环。</span></li>
+            <li><span><strong>结果尽量可验证。</strong>可以是缺陷被修复、风险被阻断、排查时间缩短或流程改进。优先使用真实数据；无法量化时，就具体说明前后变化和证据。</span></li>
+          </ol>
+        </section>
+
+        <section id="pitfalls">
+          <h2>这些表达误区要避开</h2>
+          <div class="mistakes">
+            <div class="mistake"><b>S 讲成项目介绍</b>背景过多，听众还没听到你的贡献。</div>
+            <div class="mistake"><b>T 只有“负责测试”</b>缺少目标、约束或具体问题。</div>
+            <div class="mistake"><b>A 变成工具清单</b>提了工具，却没有分析和选择。</div>
+            <div class="mistake"><b>R 只说“顺利上线”</b>无法说明行动带来了什么影响。</div>
+            <div class="mistake"><b>把团队成果说成个人功劳</b>不准确，也经不起追问。</div>
+            <div class="mistake"><b>编造漂亮数字</b>诚实说清结果与证据来源更可信。</div>
+          </div>
+        </section>
+
+        <section id="template">
+          <h2>一份可以直接练习的模板</h2>
+          <div class="template">
+            <p><b>情境 S</b>在【项目/业务背景】中，出现了【风险或挑战】，当时受到【时间、资源或技术约束】影响。</p>
+            <p><b>任务 T</b>我负责【职责范围】，目标是【可说明的目标】。</p>
+            <p><b>行动 A</b>我先【分析/对齐】，然后【关键测试设计与执行】，过程中和【协作对象】一起【推动或决策】。</p>
+            <p><b>结果 R</b>最终【实际结果】，通过【数据、记录或后续变化】可以验证；我也把【经验/用例/机制】沉淀下来。</p>
+          </div>
+        </section>
+
+        <section class="closing">
+          <h2>把价值讲清楚</h2>
+          <p>STAR 不是背诵公式，而是一种帮助你把工作讲清楚的顺序。准备面试时，先挑选几段真实经历，再分别练习风险识别、缺陷推动、自动化建设和跨团队协作等主题。</p>
+          <p>每个故事都要能回答三个问题：<strong>为什么重要、你做了什么、结果如何验证？</strong>当这三点讲清楚，测试工程师的价值就不再停留在“执行了多少用例”，而会落到你如何帮助团队更有把握地交付软件。</p>
+        </section>
+      </article>
+    </div>
+  </main>
+  <footer>质量手记 · 写给认真做质量的人</footer>
+</body>
+</html>
